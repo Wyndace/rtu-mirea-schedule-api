@@ -17,6 +17,7 @@ from app.config import settings
 from app.parsers import ICalParser
 from app.schemas.schedule import ScheduleByNameResponse, ScheduleResponse
 from app.schemas.search import ScheduleTarget
+from app.types import parse_date_param
 
 _ical_cache: TTLCache = TTLCache(maxsize=512, ttl=settings.cache_ttl)
 _parser = ICalParser()
@@ -26,13 +27,13 @@ _parser = ICalParser()
 async def get_schedule(
     schedule_type: int,
     entity_id: int,
-    date_from: date | None = None,
-    date_to: date | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
 ) -> ScheduleResponse:
     """Получить расписание для группы/преподавателя/кабинета."""
     today = date.today()
-    df = date_from or today
-    dt = date_to or today
+    df = parse_date_param(date_from, today)
+    dt = parse_date_param(date_to, today)
 
     cache_key = (schedule_type, entity_id)
     if cache_key not in _ical_cache:
@@ -54,14 +55,14 @@ async def get_schedule(
 @get("/api/schedule/by-name")
 async def get_schedule_by_name(
     q: Annotated[str, Parameter(query="query", description="Название группы, преподавателя или кабинета")],
-    date_from: date | None = None,
-    date_to: date | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
     target: ScheduleTarget | None = None,
 ) -> ScheduleByNameResponse:
     """Получить расписание по названию — без предварительного поиска ID."""
     today = date.today()
-    df = date_from or today
-    dt = date_to or today
+    df = parse_date_param(date_from, today)
+    dt = parse_date_param(date_to, today)
 
     connector = ScheduleConnector()
     raw = await connector.search(query=q, limit=15)
