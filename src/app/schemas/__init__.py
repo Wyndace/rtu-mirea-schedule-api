@@ -1,5 +1,5 @@
 from .search import ScheduleTarget, SearchResultItem, SearchResponse
-from .schedule import PersonRef, RoomRef, Lesson, ScheduleResponse, ScheduleByNameResponse
+from .schedule import PersonRef, RoomRef, Lesson, ScheduleResponse, MatchedEntity, ScheduleByNameResponse
 
 __all__ = [
     "ScheduleTarget",

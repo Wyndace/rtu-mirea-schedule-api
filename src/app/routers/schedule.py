@@ -15,7 +15,7 @@ from typing import Annotated
 from app.connectors import ScheduleConnector
 from app.config import settings
 from app.parsers import ICalParser
-from app.schemas.schedule import ScheduleByNameResponse, ScheduleResponse
+from app.schemas.schedule import MatchedEntity, ScheduleByNameResponse, ScheduleResponse
 from app.schemas.search import ScheduleTarget
 from app.types import parse_date_param
 
@@ -89,9 +89,11 @@ async def get_schedule_by_name(
     lessons = _parser.parse(ical_text, df, dt)
 
     return ScheduleByNameResponse(
-        matched_id=entity_id,
-        matched_title=matched["targetTitle"],
-        matched_target=matched_target,
+        matched=MatchedEntity(
+            id=entity_id,
+            title=matched["targetTitle"],
+            target=matched_target,
+        ),
         lessons=lessons,
         date_from=df,
         date_to=dt,

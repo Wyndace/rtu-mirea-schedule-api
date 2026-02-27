@@ -38,16 +38,19 @@ class ScheduleResponse(BaseModel):
     date_to: date
 
 
-class ScheduleByNameResponse(BaseModel):
-    matched_id: int
-    matched_title: str
-    matched_target: ScheduleTarget
+class MatchedEntity(BaseModel):
+    id: int
+    title: str
+    target: ScheduleTarget
 
     @computed_field
     @property
-    def matched_target_name(self) -> str:
-        return self.matched_target.label
+    def target_name(self) -> str:
+        return self.target.label
 
+
+class ScheduleByNameResponse(BaseModel):
+    matched: MatchedEntity
     lessons: list[Lesson]
     date_from: date
     date_to: date
