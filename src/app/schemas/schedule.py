@@ -39,7 +39,8 @@ class ScheduleResponse(BaseModel):
 class ScheduleByNameResponse(BaseModel):
     matched_id: int
     matched_title: str
-    matched_target: int   # 1=группа, 2=преподаватель, 3=кабинет
+    matched_target: int        # 1=группа, 2=преподаватель, 3=кабинет
+    matched_target_name: str   # "Группа" / "Преподаватель" / "Кабинет"
     lessons: list[Lesson]
     date_from: date
     date_to: date

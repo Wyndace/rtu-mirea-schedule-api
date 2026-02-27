@@ -76,6 +76,7 @@ async def get_schedule_by_name(
     matched = results[0]
     entity_id: int = matched["id"]
     schedule_type: int = matched["scheduleTarget"]
+    matched_target = ScheduleTarget(schedule_type)
 
     cache_key = (schedule_type, entity_id)
     if cache_key not in _ical_cache:
@@ -90,6 +91,7 @@ async def get_schedule_by_name(
         matched_id=entity_id,
         matched_title=matched["targetTitle"],
         matched_target=schedule_type,
+        matched_target_name=matched_target.label,
         lessons=lessons,
         date_from=df,
         date_to=dt,
