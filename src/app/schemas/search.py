@@ -14,11 +14,10 @@ class ScheduleTarget(IntEnum):
 
     @property
     def label(self) -> str:
-        return {
-            ScheduleTarget.GROUP: "Группа",
-            ScheduleTarget.TEACHER: "Преподаватель",
-            ScheduleTarget.ROOM: "Кабинет",
-        }[self]
+        match self:
+            case ScheduleTarget.GROUP:    return "Группа"
+            case ScheduleTarget.TEACHER:  return "Преподаватель"
+            case ScheduleTarget.ROOM:     return "Кабинет"
 
 
 class SearchResultItem(BaseModel):
