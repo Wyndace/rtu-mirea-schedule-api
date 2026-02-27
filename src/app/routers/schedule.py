@@ -90,8 +90,7 @@ async def get_schedule_by_name(
     return ScheduleByNameResponse(
         matched_id=entity_id,
         matched_title=matched["targetTitle"],
-        matched_target=schedule_type,
-        matched_target_name=matched_target.label,
+        matched_target=matched_target,
         lessons=lessons,
         date_from=df,
         date_to=dt,

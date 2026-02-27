@@ -4,7 +4,9 @@
 
 from datetime import date
 
-from pydantic import BaseModel
+from pydantic import BaseModel, computed_field
+
+from app.schemas.search import ScheduleTarget
 
 
 class PersonRef(BaseModel):
@@ -39,8 +41,13 @@ class ScheduleResponse(BaseModel):
 class ScheduleByNameResponse(BaseModel):
     matched_id: int
     matched_title: str
-    matched_target: int        # 1=группа, 2=преподаватель, 3=кабинет
-    matched_target_name: str   # "Группа" / "Преподаватель" / "Кабинет"
+    matched_target: ScheduleTarget
+
+    @computed_field
+    @property
+    def matched_target_name(self) -> str:
+        return self.matched_target.label
+
     lessons: list[Lesson]
     date_from: date
     date_to: date
