@@ -2,7 +2,7 @@
 Парсер iCal расписания в список занятий.
 """
 
-from datetime import date, datetime
+from datetime import date, datetime, time, timezone
 
 from icalendar import Calendar
 import recurring_ical_events
@@ -15,7 +15,11 @@ class ICalParser:
 
     def parse(self, ical_text: str, date_from: date, date_to: date) -> list[Lesson]:
         cal = Calendar.from_ical(ical_text)
-        events = recurring_ical_events.of(cal).between(date_from, date_to)
+        # Передаём datetime с явным временем: between() с date-объектами даёт
+        # пустой результат при date_from == date_to (граница не включается)
+        dt_from = datetime.combine(date_from, time.min)
+        dt_to = datetime.combine(date_to, time.max)
+        events = recurring_ical_events.of(cal).between(dt_from, dt_to)
         lessons = []
         for event in events:
             if event.name != "VEVENT":
