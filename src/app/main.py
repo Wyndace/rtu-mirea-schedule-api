@@ -12,7 +12,7 @@ from litestar.openapi import OpenAPIConfig
 
 from app.config import settings
 from app.connectors import ScheduleConnector
-from app.routers import get_schedule, get_week, search
+from app.routers import get_schedule, get_schedule_by_name, get_week, search
 
 logging.basicConfig(
     level=logging.DEBUG if settings.debug else logging.INFO,
@@ -27,7 +27,7 @@ async def lifespan(app: Litestar) -> AsyncGenerator[None, None]:
 
 
 app = Litestar(
-    route_handlers=[search, get_schedule, get_week],
+    route_handlers=[search, get_schedule, get_schedule_by_name, get_week],
     lifespan=[lifespan],
     openapi_config=OpenAPIConfig(
         title=settings.app_title,

@@ -1,5 +1,5 @@
 from .search import ScheduleTarget, SearchResultItem, SearchResponse
-from .schedule import PersonRef, RoomRef, Lesson, ScheduleResponse
+from .schedule import PersonRef, RoomRef, Lesson, ScheduleResponse, ScheduleByNameResponse
 
 __all__ = [
     "ScheduleTarget",
@@ -9,4 +9,5 @@ __all__ = [
     "RoomRef",
     "Lesson",
     "ScheduleResponse",
+    "ScheduleByNameResponse",
 ]

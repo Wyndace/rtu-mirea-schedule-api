@@ -34,3 +34,12 @@ class ScheduleResponse(BaseModel):
     lessons: list[Lesson]
     date_from: date
     date_to: date
+
+
+class ScheduleByNameResponse(BaseModel):
+    matched_id: int
+    matched_title: str
+    matched_target: int   # 1=группа, 2=преподаватель, 3=кабинет
+    lessons: list[Lesson]
+    date_from: date
+    date_to: date
