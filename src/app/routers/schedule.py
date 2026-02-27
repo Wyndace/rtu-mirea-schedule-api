@@ -65,7 +65,7 @@ async def get_schedule_by_name(
     dt = parse_date_param(date_to, today)
 
     connector = ScheduleConnector()
-    raw = await connector.search(query=q, limit=15)
+    raw = await connector.search(query=q, limit=100)
 
     results = raw.get("data", [])
     if target is not None:

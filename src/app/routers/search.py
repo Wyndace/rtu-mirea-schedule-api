@@ -14,7 +14,7 @@ from app.schemas.search import ScheduleTarget, SearchResponse, SearchResultItem
 @get("/api/search")
 async def search(
     q: Annotated[str, Parameter(query="query", description="Поисковый запрос")],
-    limit: int = 15,
+    limit: int = 100,
 ) -> SearchResponse:
     """Поиск групп, преподавателей и кабинетов."""
     connector = ScheduleConnector()

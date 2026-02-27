@@ -15,7 +15,7 @@ class ScheduleConnector(HTTPXAsyncConnector):
     def __init__(self) -> None:
         super().__init__(base_url=self.BASE_URL, timeout=15.0)
 
-    async def search(self, query: str, limit: int = 15) -> dict[str, Any]:
+    async def search(self, query: str, limit: int = 100) -> dict[str, Any]:
         """Поиск групп, преподавателей, кабинетов."""
         return await self.get("/schedule/api/search", params={"match": query, "limit": limit})
 
